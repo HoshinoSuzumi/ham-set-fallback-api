@@ -1,13 +1,24 @@
 from skyfield.api import EarthSatellite, wgs84, load, utc
 from datetime import datetime, timedelta, UTC
 from fastapi import FastAPI
-from fastapi.requests import Request
+from fastapi.middleware.cors import CORSMiddleware
 from models import *
 from utils import *
 import uvicorn
 import pytz
 
 app = FastAPI()
+app.add_middleware(
+  CORSMiddleware,
+  allow_origins=[
+    "http://localhost:3000",
+    "https://ham.c5r.app",
+    "https://ham-dev.c5r.app",
+  ],
+  allow_credentials=True,
+  allow_methods=["*"],
+  allow_headers=["*"],
+)
 
 ts = load.timescale()
 bjtz = pytz.timezone('Asia/Shanghai')
